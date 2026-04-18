@@ -29,7 +29,20 @@ import subconverter
 from clash import QuotedStr, quoted_scalar
 
 # outbind type
-SUPPORT_TYPE = ["ss", "ssr", "vmess", "trojan", "snell", "vless", "hysteria2", "hysteria", "http", "socks5", "anytls"]
+SUPPORT_TYPE = [
+    "ss",
+    "ssr",
+    "vmess",
+    "trojan",
+    "tuic",
+    "snell",
+    "vless",
+    "hysteria2",
+    "hysteria",
+    "http",
+    "socks5",
+    "anytls",
+]
 
 # date format
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -182,7 +195,9 @@ def fetchone(
             subscriptions = [utils.url_complete(x) for x in groups if x]
 
         try:
-            parts = re.findall(r"(?m)^#!MANAGED-CONFIG[^\n]*?(https?://[^\s\"'<>]+)", content, flags=re.I)
+            parts = re.findall(
+                r"(?m)^#(?:\s+)?(?:!MANAGED-CONFIG|订阅链接)[^\n]*?(https?://[^\s\"'<>]+)", content, flags=re.I
+            )
             if parts:
                 subscriptions.extend([utils.trim(p) for p in parts])
         except:
